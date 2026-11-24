@@ -3,193 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CodeForge - C Academy</title>
+<title>CodeForge | Four-Year Software Academy</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#101827;color:white;font-family:Arial}
-header{padding:22px;text-align:center;background:#1e293b}
-header h1{color:#38bdf8}
-nav{display:flex;flex-wrap:wrap;justify-content:center;background:#263449}
-nav button,button{padding:12px 17px;margin:5px;border:0;border-radius:7px;background:#0284c7;color:white;cursor:pointer}
-main{max-width:850px;margin:25px auto;padding:15px}
-.card{background:#1e293b;padding:20px;border-radius:12px;margin-bottom:16px}
-h2{color:#38bdf8}
-pre,textarea{background:#0b1220;color:#a5f3fc;padding:14px;border-radius:8px;overflow:auto}
-textarea{width:100%;min-height:180px}
-.option{display:block;padding:12px;background:#334155;margin:8px;border-radius:7px}
-.progress{height:10px;background:#475569;border-radius:10px}
-#bar{height:10px;background:#22c55e;width:0;border-radius:10px}
+:root{--bg:#0b1020;--panel:#131c31;--panel2:#1a2742;--text:#eef3ff;--muted:#a8b5ce;--accent:#70a5ff;--green:#55d6a2;--border:#2a3a59;--yellow:#ffd479}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,Segoe UI,Arial,sans-serif}
+header{padding:28px 5%;background:linear-gradient(120deg,#17284b,#10182b);border-bottom:1px solid var(--border)}
+header h1{margin:0;color:var(--accent);font-size:30px}header p{margin:6px 0 0;color:var(--muted)}
+.layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 115px)}
+aside{padding:20px;border-right:1px solid var(--border);background:#0e1729}
+main{padding:24px;max-width:1200px;width:100%;margin:auto}
+button,select{font:inherit}button{cursor:pointer;border:1px solid var(--border);border-radius:9px;padding:10px 13px;background:var(--panel2);color:var(--text)}
+button:hover{border-color:var(--accent)}button.primary{background:#2865c7;border-color:#2865c7}button.done{background:#14583f;border-color:#267b5a}
+.year{margin:14px 0}.year h3{color:var(--yellow);font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+.lesson-btn{display:block;width:100%;text-align:left;margin:6px 0;background:transparent}
+.lesson-btn.active{background:#20385f;border-color:var(--accent)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.stat{padding:14px;background:var(--panel2);border-radius:10px}
+.muted{color:var(--muted)}.tag{display:inline-block;color:#cfe0ff;background:#20385f;padding:3px 9px;border-radius:20px;font-size:12px;margin:2px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.tabs button.active{background:#2865c7;border-color:#2865c7}
+.item{padding:13px;border:1px solid var(--border);border-radius:10px;margin:9px 0;background:#101a2e}
+.item label{display:flex;gap:10px;align-items:flex-start}.item input{margin-top:5px;accent-color:var(--green)}
+.question{padding:15px;background:#101a2e;border:1px solid var(--border);border-radius:10px;margin:12px 0}
+.option{display:block;margin:7px 0;padding:8px;border-radius:7px;background:#182640;cursor:pointer}
+.option:hover{background:#22395d}.option input{margin-right:8px}
+textarea{width:100%;min-height:110px;background:#091323;color:var(--text);border:1px solid var(--border);border-radius:9px;padding:12px;font:14px/1.5 ui-monospace,monospace}
+input[type=text]{width:100%;background:#091323;color:var(--text);border:1px solid var(--border);padding:10px;border-radius:8px}
+.progress{height:9px;background:#26344c;border-radius:20px;overflow:hidden}.progress span{display:block;height:100%;background:var(--green);width:0}
+.hidden{display:none}.result{font-weight:700;color:var(--green)}footer{padding:20px;text-align:center;color:var(--muted);border-top:1px solid var(--border)}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--border)}main{padding:15px}}
 </style>
 </head>
 <body>
-
 <header>
-<h1>CODEFORGE</h1>
-<p>Learn C | Take Tests | Complete Projects</p>
+  <h1>⚡ CodeForge</h1>
+  <p>Your four-year, step-by-step software engineering learning academy</p>
 </header>
-
-<nav>
-<button onclick="home()">Home</button>
-<button onclick="lessons()">Lessons</button>
-<button onclick="tests()">Tests</button>
-<button onclick="assignments()">Assignments</button>
-<button onclick="projects()">Projects</button>
-</nav>
-
-<main id="app"></main>
+<div class="layout">
+<aside>
+  <h2>Learning path</h2>
+  <p class="muted">Choose a year, then open a lesson.</p>
+  <div id="lessonNav"></div>
+</aside>
+<main>
+  <section class="grid">
+    <div class="stat"><div class="muted">Academic years</div><strong>4</strong></div>
+    <div class="stat"><div class="muted">Lessons</div><strong id="lessonCount">12</strong></div>
+    <div class="stat"><div class="muted">Total assignments</div><strong id="assignmentCount">60</strong></div>
+    <div class="stat"><div class="muted">Total projects</div><strong id="projectCount">60</strong></div>
+  </section>
+  <section class="card">
+    <div class="grid">
+      <div><h3>Overall progress</h3><div class="progress"><span id="overallBar"></span></div><p class="muted" id="overallText">0 of 60 assignments completed</p></div>
+      <div><h3>Quiz best scores</h3><strong id="bestScores">No scores yet</strong><p class="muted">Scores are saved in this browser.</p></div>
+    </div>
+  </section>
+  <div id="lessonContent"></div>
+</main>
+</div>
+<footer>CodeForge • Learn the concept, practise it, build something, then test yourself.</footer>
 
 <script>
-const data=[
-["C Introduction","C is a general-purpose programming language.",
-'#include <stdio.h>\nint main(){\n printf("Hello World");\n return 0;\n}'],
-["Variables","Variables store data values.",
-'int age=19;\nfloat marks=85.5;\nchar grade=\'A\';'],
-["If Else","Conditions help programs make decisions.",
-'if(n>0){\n printf("Positive");\n}else{\n printf("Negative or zero");\n}'],
-["Loops","Loops repeat statements.",
-'for(int i=1;i<=5;i++){\n printf("%d ",i);\n}'],
-["Arrays","Arrays store multiple values.",
-'int a[5]={1,2,3,4,5};\nprintf("%d",a[0]);'],
-["Functions","Functions make programs reusable.",
-'int add(int a,int b){\n return a+b;\n}']
+const lessons = [
+{year:1,title:"C Programming Foundations",level:"Beginner",desc:"Learn how a C program is structured, how data is stored, and how to write, compile and debug small programs.",topics:["C program structure","variables and data types","operators","input/output","compilation and errors"],assign:["Write a program to print your name, branch and college.","Read two integers and display their sum, difference, product and quotient.","Convert Celsius to Fahrenheit using a formula.","Calculate the area and perimeter of a rectangle.","Read marks in five subjects and calculate the total and average."],projects:["Personal profile generator using formatted output.","Basic four-operation calculator.","Temperature and unit converter.","Student marks summary for one student.","Simple bill generator with item, quantity and price."],concept:"C program structure, variables, data types and input/output"},
+{year:1,title:"Conditions, Loops and Problem Solving",level:"Beginner",desc:"Use decisions and repetition to solve number problems. Trace each iteration before writing code.",topics:["if, if-else and switch","for, while and do-while","nested loops","break and continue","algorithm and flowchart"],assign:["Check whether a number is even or odd.","Find the largest of three numbers.","Print the multiplication table of a number.","Find the factorial of a positive integer using a loop.","Check whether a number is prime."],projects:["Menu-driven calculator using switch.","Number analysis tool: even/odd, prime and palindrome.","Pattern printing practice menu.","Quiz score and grade calculator.","Simple ATM menu simulation using sample balances."],concept:"conditions, loops, branching and tracing program flow"},
+{year:1,title:"Arrays, Strings and Functions",level:"Beginner",desc:"Organise data in arrays and strings, and divide programs into reusable functions.",topics:["one-dimensional arrays","two-dimensional arrays","strings","functions and parameters","recursion basics"],assign:["Read n numbers into an array and find their sum.","Find the largest and smallest elements in an array.","Count vowels, consonants, digits and spaces in a string.","Create a function to calculate factorial.","Add two matrices of compatible dimensions."],projects:["Student marks manager for a class.","Contact list using arrays and strings.","Matrix operations menu.","Word and character analyser.","Function-based scientific calculator."],concept:"arrays, strings, functions, parameters and recursion"},
+{year:2,title:"Pointers, Structures and C++",level:"Intermediate",desc:"Understand memory addresses, pointers, user-defined data types and object-oriented programming foundations.",topics:["pointers and pointer arithmetic","dynamic memory concepts","structures and unions","C++ classes and objects","constructors and encapsulation"],assign:["Use pointers to swap two integers through a function.","Store and display student records using a structure.","Create a structure array and search by roll number.","Write a C++ class for a bank account with deposit and withdrawal methods.","Demonstrate constructors and private data members in C++."],projects:["Student record manager using structures.","Dynamic integer list with safe memory handling.","Bank account class demonstration.","Library book record model.","Complex number class with arithmetic operations."],concept:"pointers, structures, classes, objects and encapsulation"},
+{year:2,title:"Data Structures",level:"Intermediate",desc:"Choose suitable data structures and understand how operations work and how efficiently they run.",topics:["linked lists","stacks and queues","trees and traversals","hash tables","searching and sorting"],assign:["Implement a singly linked list with insert and delete operations.","Implement stack operations using an array.","Implement a circular queue.","Write linear search and binary search and compare them.","Implement bubble sort and selection sort."],projects:["Browser-history model using a stack.","Ticket queue simulator.","Student directory using a linked list.","Sorting visualiser using step-by-step text output.","Binary search tree contact lookup."],concept:"linked lists, stacks, queues, trees, hashing and algorithms"},
+{year:2,title:"Database, Operating Systems and Networks",level:"Intermediate",desc:"Learn how applications store data and how operating systems and networks support software.",topics:["SQL and relational databases","keys and joins","processes and threads","memory and file systems","networking and HTTP"],assign:["Design tables for a student-course database.","Write SQL queries using SELECT, WHERE, ORDER BY and GROUP BY.","Create a query joining students and marks tables.","Explain process versus thread with a small example.","Describe the HTTP request-response cycle for opening a webpage."],projects:["Student database schema and sample queries.","Library database with books and issue records.","Command-line file organiser.","Client-server message flow diagram and explanation.","Basic network diagnostic report for a sample setup."],concept:"SQL, relational databases, operating systems and networking"},
+{year:3,title:"Algorithms and Software Design",level:"Intermediate",desc:"Move from writing code to designing reliable, efficient and maintainable software.",topics:["time and space complexity","recursion and divide-and-conquer","greedy and dynamic programming basics","design patterns","clean code and documentation"],assign:["Estimate the time complexity of common loops.","Implement merge sort and explain its approach.","Solve a simple Fibonacci problem using memoisation.","Refactor a long function into smaller functions.","Write a short design note explaining modules and data flow."],projects:["Algorithm comparison report with sample inputs.","Route-finding model on a small weighted graph.","Task scheduler using priority rules.","Reusable logging module.","Design-pattern demonstration with a small example."],concept:"algorithm analysis, software design and maintainable code"},
+{year:3,title:"Web Development and APIs",level:"Intermediate",desc:"Build browser-based applications and connect them to backend services.",topics:["HTML semantic structure","CSS layout and responsive design","JavaScript and DOM","backend and REST APIs","authentication and validation concepts"],assign:["Build a semantic multi-section HTML page.","Style a responsive card layout using CSS Flexbox or Grid.","Use JavaScript to validate a form.","Create a small REST API design with GET, POST, PUT and DELETE routes.","Display JSON data in a browser interface."],projects:["Responsive student portfolio website.","Interactive quiz application.","Task tracker with browser storage.","Course catalogue interface using sample JSON.","Frontend for a student record API."],concept:"HTML, CSS, JavaScript, backend routes and REST APIs"},
+{year:3,title:"Software Engineering, Testing and Security",level:"Intermediate",desc:"Plan, test and protect software. Learn teamwork workflows and how to investigate defects.",topics:["requirements and user stories","Git and collaboration","unit and integration testing","debugging and code review","secure coding fundamentals"],assign:["Write five user stories for a campus app.","Create a Git repository and practise commits and branches.","Write test cases for a calculator including edge cases.","Prepare a bug report with steps to reproduce and expected result.","Identify input-validation risks in a sample form."],projects:["Test plan for a student portal.","Issue tracker workflow demonstration.","Code review checklist and sample review.","Secure login-flow prototype using safe mock data.","Continuous integration workflow for running tests."],concept:"requirements, Git, testing, debugging and secure coding"},
+{year:4,title:"Cloud, DevOps and Deployment",level:"Advanced",desc:"Package, deploy and monitor applications using modern development and operations practices.",topics:["Linux and command line","containers and Docker concepts","CI/CD pipelines","cloud deployment concepts","logging and monitoring"],assign:["Write a shell script to organise sample files.","Create a Dockerfile for a simple demo application.","Design a CI pipeline that runs tests on each push.","Draw a cloud deployment architecture for a small web app.","Define useful logs and health metrics for an application."],projects:["Containerised portfolio application.","Automated test-and-build pipeline.","Cloud architecture proposal for CodeForge.","Application health dashboard using sample metrics.","Deployment and rollback runbook."],concept:"Linux, containers, CI/CD, cloud services and monitoring"},
+{year:4,title:"AI, Data and Modern Application Development",level:"Advanced",desc:"Understand data workflows and AI application concepts, while evaluating accuracy, privacy and limitations.",topics:["Python for data work","data cleaning and visualisation","machine learning workflow","AI APIs and prompt design","evaluation, privacy and responsible use"],assign:["Write a Python program to clean missing values in a small dataset.","Calculate summary statistics for a sample dataset.","Split a sample dataset into training and testing sets.","Design evaluation metrics for a classification task.","Write a short privacy and limitations review for an AI feature."],projects:["Student performance data dashboard using sample data.","Simple prediction model on a public practice dataset.","FAQ assistant using a controlled sample knowledge base.","Code explanation helper prototype with human review.","AI feature evaluation report including failure cases."],concept:"Python, data analysis, machine learning and responsible AI"},
+{year:4,title:"Capstone and Career Readiness",level:"Advanced",desc:"Combine your skills into a complete project, document decisions, test it and present your work.",topics:["problem selection and scope","system architecture","implementation milestones","testing and deployment","portfolio and technical presentation"],assign:["Write a problem statement and define the target users.","Create functional and non-functional requirements.","Draw a system architecture and database design.","Prepare a test plan covering normal and edge cases.","Write setup instructions and a concise project report."],projects:["Build and deploy a complete student productivity application.","Create a C practice platform with lessons and quizzes.","Build a campus service booking prototype.","Develop a data-backed dashboard for a real problem.","Create a team capstone with documentation and demo."],concept:"end-to-end project planning, implementation, testing and presentation"}
 ];
 
-const quiz=[
-["Which function starts a C program?",["printf","main","scanf"],1],
-["Which header supports printf?",["stdio.h","math.h","string.h"],0],
-["Which type stores integers?",["float","char","int"],2],
-["Which loop executes at least once?",["for","while","do-while"],2],
-["What is the first array index?",["0","1","-1"],0],
-["Which operator checks equality?",["=","==","!="],1],
-["Which keyword exits a loop?",["continue","break","return"],1],
-["Which keyword returns a value?",["return","printf","int"],0]
+// Ten interactive quiz questions for each lesson. These assess practical learning habits
+// and engineering judgement in the context of the selected lesson.
+const quizBank = [
+{q:"Before implementing a problem from this lesson, what should you do first?",a:["Start typing code immediately","Understand the requirements and identify inputs and outputs","Choose random variable names","Skip planning"],c:1,e:"Clarifying requirements and inputs/outputs gives your solution a clear target."},
+{q:"Which is the best way to approach a large task in this lesson?",a:["Break it into smaller, testable steps","Write everything in one huge block","Avoid naming the steps","Ignore the difficult parts"],c:0,e:"Small steps are easier to implement, test and debug."},
+{q:"When testing a solution from this lesson, which inputs should you include?",a:["Only one normal input","Only very large values","Normal, boundary and invalid cases where applicable","No input is needed"],c:2,e:"Different cases reveal errors that a single normal input may miss."},
+{q:"Your program gives an unexpected result. What is the strongest first response?",a:["Change many lines at once","Reproduce the issue and inspect the relevant values step by step","Delete the project","Assume the compiler is always wrong"],c:1,e:"A repeatable example and focused debugging help locate the actual cause."},
+{q:"What makes code easier for another developer to understand?",a:["Meaningful names and clear structure","Extremely long functions","Unexplained abbreviations everywhere","Removing all useful comments"],c:0,e:"Readable names and structure communicate intent."},
+{q:"Why should you test after making a change?",a:["To make the file larger","To check that the change works and did not break existing behaviour","Testing is only for final-year projects","It is unnecessary"],c:1,e:"Retesting protects existing functionality as the project changes."},
+{q:"What is a useful role for version control such as Git?",a:["Track changes and support safe collaboration","Replace the need to test","Automatically guarantee bug-free code","Only store images"],c:0,e:"Version control records project history and helps manage collaboration."},
+{q:"If you do not understand an error message, what should you do?",a:["Ignore it","Read it carefully, locate the reported area and reduce the problem to a small example","Randomly reinstall everything","Submit without checking"],c:1,e:"Error messages often provide clues about the location and type of problem."},
+{q:"Which project habit is most useful for long-term maintenance?",a:["Keep setup steps and important decisions documented","Keep all knowledge only in your head","Never update dependencies","Avoid explaining how to run it"],c:0,e:"Documentation helps you and others run, understand and maintain the project."},
+{q:"How should you decide whether your lesson solution is complete?",a:["It compiles once, so it must be perfect","It meets the requirements and passes relevant tests, including edge cases","It has the most lines of code","It looks complicated"],c:1,e:"Completion means meeting requirements and behaving correctly across relevant cases."}
 ];
 
-const tasks=[
-["Even or Odd","Read an integer and check whether it is even or odd."],
-["Largest Number","Find the largest among three integers."],
-["Multiplication Table","Print a multiplication table from 1 to 10."],
-["Factorial","Calculate factorial using a loop."],
-["Prime Number","Check whether a number is prime."],
-["Array Maximum","Find the largest element in an array."]
-];
+let currentLesson = 0;
+let currentTab = "overview";
+let quizSubmitted = false;
+const progress = JSON.parse(localStorage.getItem("codeforge_progress") || "{}");
+const scores = JSON.parse(localStorage.getItem("codeforge_scores") || "{}");
 
-let done=JSON.parse(localStorage.getItem("done")||"[]");
-let best=Number(localStorage.getItem("best")||0);
-
-function home(){
-document.getElementById("app").innerHTML=`
-<div class="card">
-<h2>Welcome to CodeForge!</h2>
-<p>Your C programming classroom.</p>
-<h3>Learning progress: ${done.length}/${data.length}</h3>
-<div class="progress"><div id="bar"></div></div>
-<p>Best test score: ${best}%</p>
-</div>
-<div class="card">
-<h2>Start Learning</h2>
-<p>Learn concepts, practise coding and test your knowledge.</p>
-<button onclick="lessons()">Start</button>
-</div>`;
-document.getElementById("bar").style.width=
-(done.length/data.length*100)+"%";
+function save(){localStorage.setItem("codeforge_progress",JSON.stringify(progress));localStorage.setItem("codeforge_scores",JSON.stringify(scores));}
+function renderNav(){
+ const nav=document.getElementById("lessonNav");nav.innerHTML="";
+ [1,2,3,4].forEach(y=>{
+  const group=document.createElement("div");group.className="year";
+  group.innerHTML=`<h3>Year ${y}</h3>`;
+  lessons.forEach((l,i)=>{if(l.year===y){const b=document.createElement("button");b.className="lesson-btn"+(i===currentLesson?" active":"");b.textContent=`${i+1}. ${l.title}`;b.onclick=()=>{currentLesson=i;currentTab="overview";render();};group.appendChild(b);}});
+  nav.appendChild(group);
+ });
 }
-
-function lessons(){
-let html="<h2>C Lessons</h2>";
-data.forEach((d,i)=>{
-html+=`<div class="card">
-<h3>${i+1}. ${d[0]}</h3>
-<p>${d[1]}</p>
-<pre>${d[2].replace(/</g,"&lt;").replace(/>/g,"&gt;")}</pre>
-<button onclick="complete(${i})">
-${done.includes(i)?"Completed":"Mark completed"}
-</button>
-</div>`;
-});
-document.getElementById("app").innerHTML=html;
+function renderStats(){
+ const total=lessons.reduce((n,l,i)=>n+l.assign.length,0);
+ const done=Object.entries(progress).filter(([key,value])=>key.includes("-a-") && value).length;
+ document.getElementById("overallBar").style.width=(done/total*100)+"%";
+ document.getElementById("overallText").textContent=`${done} of ${total} assignments completed`;
+ const best=Object.values(scores);document.getElementById("bestScores").textContent=best.length?`${Math.max(...best)} / 10`:"No scores yet";
 }
-
-function complete(i){
-if(!done.includes(i))done.push(i);
-localStorage.setItem("done",JSON.stringify(done));
-lessons();
-}
-
-function tests(){
-let html=`<div class="card"><h2>C Programming Test</h2>
-<p>Answer all questions and submit.</p>`;
-quiz.forEach((q,i)=>{
-html+=`<div class="card"><b>${i+1}. ${q[0]}</b>`;
-q[1].forEach((o,j)=>{
-html+=`<label class="option">
-<input type="radio" name="q${i}" value="${j}"> ${o}
-</label>`;
-});
-html+="</div>";
-});
-html+=`<button onclick="submitTest()">Submit Test</button>
-<div id="result"></div></div>`;
-document.getElementById("app").innerHTML=html;
-}
-
-function submitTest(){
-let score=0;
-quiz.forEach((q,i)=>{
-let a=document.querySelector('input[name="q'+i+'"]:checked');
-if(a&&Number(a.value)===q[2])score++;
-});
-let percent=Math.round(score/quiz.length*100);
-best=Math.max(best,percent);
-localStorage.setItem("best",best);
-document.getElementById("result").innerHTML=
-`<h2>Score: ${score}/${quiz.length}</h2>
-<p>${percent}%</p>
-<p>${percent>=75?"Excellent!":"Revise the lessons and try again."}</p>`;
-}
-
-function assignments(){
-let html="<h2>Programming Assignments</h2>";
-tasks.forEach((t,i)=>{
-html+=`<div class="card">
-<h3>Assignment ${i+1}: ${t[0]}</h3>
-<p>${t[1]}</p>
-</div>`;
-});
-html+=`<div class="card">
-<h3>Submit your C program</h3>
-<textarea id="code" placeholder="Write your C program here..."></textarea>
-<button onclick="saveCode()">Save submission</button>
-<p id="saved"></p>
-</div>`;
-document.getElementById("app").innerHTML=html;
-}
-
-function saveCode(){
-let code=document.getElementById("code").value;
-if(!code.trim()){
-document.getElementById("saved").innerText="Write code first.";
-return;
-}
-localStorage.setItem("submission",code);
-document.getElementById("saved").innerText=
-"Code saved successfully. Compilation and automatic evaluation will be added in the next version.";
-}
-
-function projects(){
-document.getElementById("app").innerHTML=`
-<h2>Mini Projects</h2>
-<div class="card"><h3>1. Calculator</h3>
-<p>Create a calculator using switch-case.</p></div>
-<div class="card"><h3>2. Student Management System</h3>
-<p>Store names, marks and calculate averages using structures.</p></div>
-<div class="card"><h3>3. Number Analysis Tool</h3>
-<p>Check prime, factorial, even/odd and digit sum.</p></div>
-<div class="card"><h3>4. Quiz Application</h3>
-<p>Build a question-answer application with a score counter.</p></div>`;
-}
-
-home();
-</script>
-</body>
-</html>
+function render(){
+ renderNav();renderStats();
+ const l=lessons[currentLesson],root=document.getElementById("lessonContent");
+ const tabs=["overview","assignments","projects","test"];
+ root.innerHTML=`<div class="card"><span class="tag">YEAR ${l.year}</span><span c
